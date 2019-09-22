@@ -7,3 +7,8 @@ The playlist management is coded with implicit assumuption that file names have 
 * e.g. new soul - yael naim [ac].mp3
 
 i.e. do not use '\[' and '\]' anywhere else in the file name\!
+
+
+##### Initial run
+
+Current version of code assumes that authentication tokens are already saved to disk. See the [docs](https://unofficial-google-music-api.readthedocs.io/en/latest/index.html). 
