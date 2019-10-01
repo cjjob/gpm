@@ -9,31 +9,13 @@ from gmusicapi import Musicmanager
 
 def 
 
-#### Parameters
-music_dir = '/home/conor/Music/'
-
-#### Authenticate gpm connection
-
-
-mc = Mobileclient()
-# Line below only done once and token saved to disk
-# mc.perform_oauth()
-mc.oauth_login(mc.FROM_MAC_ADDRESS) # Uses token from above
-
-mm = Musicmanager()
-# mm.perform_oauth()
-
-
-#### Get mp3 file names from music folder
-local_song_names = glob.glob(music_dir + '*.mp3')
-
-#### Create dictionary of existing song ids
-# { 'song_name': id }
-song_ids = {}
-
-gpm_songs = mc.get_all_songs()
-for song in gpm_songs:
-    song_ids[song['title']] = song['id']
+def required_playlists(songs):
+    ''' 
+    Args:
+        songs: list of mp3 song file name
+    Returns:
+        list of playlist name strings
+    '''
 
 #### Create dictionary of existing playlists ids
 # { 'playlist_name': id }
@@ -44,15 +26,13 @@ for pl in gpm_playlists:
     playlist_ids[pl['name']] = pl['id']
 
 
-if uploading:
-    pass
-
-if playlisting:
-    pass
-
-#### Add every song to playlists
-
 def main():
+    #### Ensure user parameters/behaviour is clear
+
+    # Parameters
+    music_dir = '/home/conor/Music/'
+
+
     if len(sys.argv) != 3:
         print('Specify T/F arguments for uploading and updating playlists')
         print('e.g. python ' + sys.argv[0] + ' 0 1')
@@ -64,19 +44,34 @@ def main():
     
     if accepted.lower() != 'y':
         sys.exit(0)
-    
-        
-    # If True will upload all new music
+
+    #### Values useful for both 'sections'
+
+    #### Get mp3 file names from music folder
+local_song_names = glob.glob(music_dir + '*.mp3')
+
+    # Create dictionary of existing song ids
+    # { 'song_name': id }
+    song_ids = {}
+
+gpm_songs = mc.get_all_songs()
+for song in gpm_songs:
+    song_ids[song['title']] = song['id']
+
+    #### Manage upload/deletion of songs
     uploading = sys.argv[1]
     if uploading:
-        mc = 
-        
-    # If True will update all playlists
+        mm = Musicmanager()
+        mm.login() # Authenticates using on-disk token
+
+
+    #### Create and edit playlists as required
     playlisting = sys.argv[2]
     if playlisting:
-        mm.login()
+        mc = Mobileclient()
+        mc.oauth_login(mc.FROM_MAC_ADDRESS) # Authenticates using on-disk token
+
         
-   
 
 
 if __name__ == '__main__':
