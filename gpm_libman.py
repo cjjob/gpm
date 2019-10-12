@@ -24,14 +24,12 @@ def required_playlists(song):
 
 
 def main():
-    
     #### Requests user specifies update library and/or playlists
     if len(sys.argv) != 3:
         print('Specify T/F arguments for uploading and updating playlists')
         print('e.g. python ' + sys.argv[0] + ' 1 0')
         print('which would:\n--> upload new songs\n--> NOT update playlists')
         sys.exit(0)
-    
     
     #### Parameters
     music_dir = '/home/conor/Music/'
@@ -41,7 +39,6 @@ def main():
         print('Edit music_dir variable in source to run script...')
         print('Ending music management.')
         sys.exit(0)
-    
 
     #### Some general information needed for both tasks is collected here
     
@@ -64,7 +61,6 @@ def main():
     gpm_songs = mc.get_all_songs()
     for song in gpm_songs:
         song_ids[song['title']] = song['id']
-    
 
     #### Manage upload/deletion of songs
     uploading = sys.argv[1]
@@ -102,7 +98,6 @@ def main():
             print('Ending music management.')
             sys.exit(0)
         mm.upload(to_upload)
-
 
     #### Create and edit playlists as required
     # Works by deleting all playlists and then re-creating from scratch
