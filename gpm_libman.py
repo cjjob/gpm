@@ -34,7 +34,7 @@ def main():
     
     
     #### Parameters
-    music_dir = '/media/conor/5451-8AC1/Music/' # '/home/conor/Music/'
+    music_dir = '/home/conor/Music/'
     print('Local music directory set to:', music_dir)
     accepted = input('Type "y" if this is correct directory: ')
     if accepted.lower() != 'y':
@@ -53,6 +53,11 @@ def main():
     for p in local_song_paths:
         _, song_name = os.path.split(p)
         local_song_names.add(song_name)
+    
+    # Authenticate
+    mc = Mobileclient()
+    mc.oauth_login(mc.FROM_MAC_ADDRESS) # Authenticates using on-disk token
+    print('Mobile client authentication complete...')
     
     # Create dict of gpm 'song'': 'id' pairs
     song_ids = {}
@@ -77,15 +82,14 @@ def main():
             print('No songs to delete.')
         else:
             print('{} songs to delete:'.format(len(to_delete)))
-            print([s for s in to_delete])
-        
-        # delete_songs() method requires a list as input
-        to_delete_ids = []
-        for s in to_delete:
-            song_id = song_ids[s]
-            to_delete_ids.append(song_id)
-        mc.delete_songs(to_delete_ids)
-        print('Deleted songs.')
+            print([s for s in to_delete])        
+            # delete_songs() method requires a list as input
+            to_delete_ids = []
+            for s in to_delete:
+                song_id = song_ids[s]
+                to_delete_ids.append(song_id)
+            mc.delete_songs(to_delete_ids)
+            print('Deleted songs.')
         
         #### Uploading 
         to_upload = []
@@ -103,11 +107,7 @@ def main():
     #### Create and edit playlists as required
     # Works by deleting all playlists and then re-creating from scratch
     playlisting = sys.argv[2]
-    if playlisting:
-        mc = Mobileclient()
-        mc.oauth_login(mc.FROM_MAC_ADDRESS) # Authenticates using on-disk token
-        print('Mobile client authentication complete...')
-        
+    if playlisting:        
         # Refresh song list 
         # (since we have uploaded new songs since original list generated)
         song_ids = {}
