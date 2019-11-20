@@ -64,7 +64,7 @@ def main():
 
     #### Manage upload/deletion of songs
     uploading = sys.argv[1]
-    if uploading:
+    if uploading == '1':
         mm = Musicmanager()
         mm.login() # Authenticates using on-disk token
         print('Music manager authentication complete...')
@@ -102,7 +102,7 @@ def main():
     #### Create and edit playlists as required
     # Works by deleting all playlists and then re-creating from scratch
     playlisting = sys.argv[2]
-    if playlisting:        
+    if playlisting == '1':        
         # Refresh song list 
         # (since we have uploaded new songs since original list generated)
         song_ids = {}
