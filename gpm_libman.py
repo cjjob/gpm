@@ -93,11 +93,12 @@ def main():
             if s not in song_ids:
                 to_upload.append(music_dir + s)
         print('{} songs to upload.'.format(len(to_upload)))
-        accepted = input('Type "y" to commence upload now: ')
-        if accepted.lower() != 'y':
-            print('Ending music management.')
-            sys.exit(0)
-        mm.upload(to_upload)
+        if len(to_upload) != 0:
+            accepted = input('Type "y" to commence upload now: ')
+            if accepted.lower() != 'y':
+                print('Ending music management.')
+                sys.exit(0)
+            mm.upload(to_upload)
 
     #### Create and edit playlists as required
     # Works by deleting all playlists and then re-creating from scratch
