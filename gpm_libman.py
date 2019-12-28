@@ -53,7 +53,7 @@ def main():
     
     # Authenticate
     mc = Mobileclient()
-    mc.oauth_login(mc.FROM_MAC_ADDRESS) # Authenticates using on-disk token
+    mc.oauth_login('38e42c4b00ca0a10') # Authenticates using on-disk token
     print('Mobile client authentication complete...')
     
     # Create dict of gpm 'song'': 'id' pairs
@@ -66,7 +66,7 @@ def main():
     uploading = sys.argv[1]
     if uploading == '1':
         mm = Musicmanager()
-        mm.login() # Authenticates using on-disk token
+        mm.login(uploader_id='EE:20:80:B4:17:A9') # Authenticates using on-disk token
         print('Music manager authentication complete...')
         
         # Delete songs that no longer exist locally
